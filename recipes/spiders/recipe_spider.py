@@ -6,8 +6,8 @@ class RecipeSpider(scrapy.Spider):
     name = "recipe"
     allowed_domains = ["http://cooking.nytimes.com/"]
     start_urls = [
-        "http://cooking.nytimes.com/recipes/12790"
-    ]
+        "http://cooking.nytimes.com/recipes/10563"
+    
 
     def parse(self, response):
         recipe = RecipeItem()
