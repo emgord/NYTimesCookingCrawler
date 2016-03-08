@@ -1,6 +1,6 @@
 import scrapy
 
-from recipes.items import RecipeItem, IngredientItem
+from recipes.items import RecipeItem
 
 class RecipeSpider(scrapy.Spider):
     name = "recipe"
@@ -24,6 +24,14 @@ class RecipeSpider(scrapy.Spider):
             if len(name) > 0:
                 recipe['ingredients'].append(name[0])
         yield recipe
+
+
+
+
+
+
+
+
 
         # for ingredient in response.xpath('//li[@itemprop="recipeIngredient"]'):
         #     item = IngredientItem()
