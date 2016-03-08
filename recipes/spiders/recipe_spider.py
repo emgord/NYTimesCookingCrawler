@@ -18,14 +18,18 @@ class RecipeSpider(scrapy.Spider):
         recipe['original_url'] = response.xpath('/html/body/div[2]/div/div[1]/article/@data-url').extract()[0]
         recipe['description'] = response.xpath('/html/body/div[2]/div/div[1]/article/div[1]/div[2]/div/p[1]/text()').extract()[0].strip()
         recipe['uid'] = response.xpath('/html/body/div[2]/div/div[1]/article/@data-id').extract()[0]
+        recipe['ingredients'] = []
+        for ingredient in response.xpath('//li[@itemprop="recipeIngredient"]'):
+            # name = ingredient.xpath('span[@class="ingredient-name"]/span/text()').extract()[0]
+            recipe['ingredients'].append("hello")
         yield recipe
 
-
-        for ingredient in response.xpath('//li[@itemprop="recipeIngredient"]'):
-            item = IngredientItem()
-            item['name'] = ingredient.xpath('span[@class="ingredient-name"]/span/text()').extract()[0]
-            item['recipe_id'] = response.xpath('/html/body/div[2]/div/div[1]/article/@data-id').extract()[0]
-            yield item
+        # for ingredient in response.xpath('//li[@itemprop="recipeIngredient"]'):
+        #     item = IngredientItem()
+        #     item['name'] = ingredient.xpath('span[@class="ingredient-name"]/span/text()').extract()[0]
+        #     item['recipe_id'] = response.xpath('/html/body/div[2]/div/div[1]/article/@data-id').extract()[0]
+        #     ingredients.append(item)
+        #
 
 
 

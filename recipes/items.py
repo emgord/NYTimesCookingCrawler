@@ -16,6 +16,7 @@ class RecipeItem(scrapy.Item):
     original_url = scrapy.Field()
     description = scrapy.Field()
     uid = scrapy.Field()
+    ingredients = scrapy.Field()
 
 class IngredientItem(scrapy.Item):
     name = scrapy.Field()
