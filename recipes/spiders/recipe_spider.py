@@ -7,9 +7,10 @@ class RecipeSpider(scrapy.Spider):
     allowed_domains = ["http://cooking.nytimes.com/"]
     start_urls = [
         "http://cooking.nytimes.com/recipes/10563"
-    
+    ]
 
     def parse(self, response):
+
         recipe = RecipeItem()
         recipe['title'] = response.xpath('/html/body/div[2]/div/div[1]/article/header/h1/text()').extract()[0].strip()
         recipe['image'] = response.xpath('/html/body/div[2]/div/div[1]/article/div[1]/div[1]/img/@src').extract()[0]
@@ -19,13 +20,17 @@ class RecipeSpider(scrapy.Spider):
         recipe['description'] = response.xpath('/html/body/div[2]/div/div[1]/article/div[1]/div[2]/div/p[1]/text()').extract()[0].strip()
         recipe['uid'] = response.xpath('/html/body/div[2]/div/div[1]/article/@data-id').extract()[0]
         yield recipe
-
-
+        
         for ingredient in response.xpath('//li[@itemprop="recipeIngredient"]'):
-            item = IngredientItem()
-            item['name'] = ingredient.xpath('span[@class="ingredient-name"]/span/text()').extract()[0]
-            item['recipe_id'] = response.xpath('/html/body/div[2]/div/div[1]/article/@data-id').extract()[0]
-            yield item
+            ing = IngredientItem()
+            ing['name'] = ingredient.xpath('span[@class="ingredient-name"]/span/text()').extract()[0]
+            ing['recipe_id'] = response.xpath('/html/body/div[2]/div/div[1]/article/@data-id').extract()[0]
+            yield ing
+
+
+
+
+
 
 
 
