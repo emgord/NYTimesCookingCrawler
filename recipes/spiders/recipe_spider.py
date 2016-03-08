@@ -20,8 +20,9 @@ class RecipeSpider(scrapy.Spider):
         recipe['uid'] = response.xpath('/html/body/div[2]/div/div[1]/article/@data-id').extract()[0]
         recipe['ingredients'] = []
         for ingredient in response.xpath('//li[@itemprop="recipeIngredient"]'):
-            # name = ingredient.xpath('span[@class="ingredient-name"]/span/text()').extract()[0]
-            recipe['ingredients'].append("hello")
+            name = ingredient.xpath('span[@class="ingredient-name"]/span/text()').extract()
+            if len(name) > 0:
+                recipe['ingredients'].append(name[0])
         yield recipe
 
         # for ingredient in response.xpath('//li[@itemprop="recipeIngredient"]'):
