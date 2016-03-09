@@ -3,13 +3,15 @@ import scrapy
 from recipes.items import RecipeItem
 
 class RecipeSpider(scrapy.Spider):
-    name = "recipe"
-    allowed_domains = ["http://cooking.nytimes.com/"]
+    name = "nytimescooking"
+    allowed_domains = ["cooking.nytimes.com"]
+    recipe_id = 10
     start_urls = [
-        "http://cooking.nytimes.com/recipes/100"
+        "http://cooking.nytimes.com/recipes/"+str(recipe_id)
     ]
 
     def parse(self, response):
+        print response
         recipe = RecipeItem()
         title = response.xpath('//h1[@itemprop="name"]/@data-name').extract()
         if len(title) > 0:
@@ -38,3 +40,8 @@ class RecipeSpider(scrapy.Spider):
             if len(name) > 0:
                 recipe['ingredients'].append(name[0])
         yield recipe
+        self.recipe_id += 1
+        yield self.next_request()
+
+    def next_request(self):
+        return scrapy.Request("http://cooking.nytimes.com/recipes/"+str(self.recipe_id))
