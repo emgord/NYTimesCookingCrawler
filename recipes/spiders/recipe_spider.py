@@ -6,7 +6,7 @@ class RecipeSpider(scrapy.Spider):
     handle_httpstatus_list = [404, 500]
     name = "nytimescooking"
     allowed_domains = ["cooking.nytimes.com"]
-    recipe_id = 10
+    recipe_id = 1016165
     start_urls = [
         "http://cooking.nytimes.com/recipes/"+str(recipe_id)
     ]
